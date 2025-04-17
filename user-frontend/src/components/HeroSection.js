@@ -24,7 +24,7 @@ const HeroSection = () => {
   useEffect(() => {
     const interval = setInterval(nextImage, 3000); // Change image every 3 seconds
     return () => clearInterval(interval); // Cleanup on unmount
-  }, []);
+  }, [nextImage]); // Add nextImage as a dependency to resolve ESLint warning
 
   return (
     <section
