@@ -8,9 +8,6 @@ const HeroSection = () => {
     "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1920&auto=format&fit=crop", 
   ];
 
-
-
-
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Function to go to the next image
@@ -41,7 +38,24 @@ const HeroSection = () => {
         transition: "background-image 0.5s ease-in-out", // Smooth transition
       }}
     >
-      
+      {/* Navigation buttons */}
+      <div className="absolute top-1/2 left-0 transform -translate-y-1/2 p-4 z-20">
+        <button
+          onClick={prevImage}
+          className="bg-black text-white p-2 rounded-full hover:bg-gray-800 transition duration-300"
+        >
+          &lt;
+        </button>
+      </div>
+      <div className="absolute top-1/2 right-0 transform -translate-y-1/2 p-4 z-20">
+        <button
+          onClick={nextImage}
+          className="bg-black text-white p-2 rounded-full hover:bg-gray-800 transition duration-300"
+        >
+          &gt;
+        </button>
+      </div>
+
       {/* Content */}
       <div className="max-w-2xl px-4 sm:px-6 lg:px-8 z-10">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg">

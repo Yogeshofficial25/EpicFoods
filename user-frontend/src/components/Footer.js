@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { FaFacebook, FaInstagram, FaTwitter, FaEnvelope } from "react-icons/fa";
 
@@ -49,13 +48,22 @@ const Footer = () => {
 
           {/* Social Media Icons */}
           <div className="flex space-x-4 mt-4">
-            <a href="#" className="text-gray-400 hover:text-gray-200 text-lg transition duration-300">
+            <a
+              href="https://facebook.com/munchmates"
+              className="text-gray-400 hover:text-gray-200 text-lg transition duration-300"
+            >
               <FaFacebook />
             </a>
-            <a href="#" className="text-gray-400 hover:text-gray-200 text-lg transition duration-300">
+            <a
+              href="https://instagram.com/munchmates"
+              className="text-gray-400 hover:text-gray-200 text-lg transition duration-300"
+            >
               <FaInstagram />
             </a>
-            <a href="#" className="text-gray-400 hover:text-gray-200 text-lg transition duration-300">
+            <a
+              href="https://twitter.com/munchmates"
+              className="text-gray-400 hover:text-gray-200 text-lg transition duration-300"
+            >
               <FaTwitter />
             </a>
             <a
