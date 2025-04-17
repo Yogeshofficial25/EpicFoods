@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 const HeroSection = () => {
   // Array of background images
@@ -10,10 +10,10 @@ const HeroSection = () => {
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Function to go to the next image
-  const nextImage = () => {
+  // Wrap nextImage with useCallback to prevent it from being recreated on each render
+  const nextImage = useCallback(() => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
+  }, [images.length]);
 
   // Function to go to the previous image
   const prevImage = () => {
@@ -24,7 +24,7 @@ const HeroSection = () => {
   useEffect(() => {
     const interval = setInterval(nextImage, 3000); // Change image every 3 seconds
     return () => clearInterval(interval); // Cleanup on unmount
-  }, [nextImage]); // Add nextImage as a dependency to resolve ESLint warning
+  }, [nextImage]); // Use nextImage in the dependency array
 
   return (
     <section
