@@ -125,13 +125,13 @@ const Menu = () => {
   const [loading, setLoading] = useState(true);
 
   // Base URL for images (Make sure this points to your uploads folder correctly)
-  const IMAGE_BASE_URL = "http://localhost:5000/uploads/";
+  const IMAGE_BASE_URL = "https://munch-mates.onrender.com/uploads/";
 
   // Fetch menu from API
   useEffect(() => {
     const fetchMenu = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/menu/");
+        const response = await fetch("https://munch-mates.onrender.com/api/menu/");
         if (!response.ok) throw new Error("Failed to fetch menu data");
         const data = await response.json();
         setMenuData(data);

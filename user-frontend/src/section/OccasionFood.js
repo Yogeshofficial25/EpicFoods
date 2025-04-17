@@ -309,7 +309,7 @@ const OccasionFood = () => {
     setError(null);
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/occasion-cards/getByCategory/${occasion}`
+        `https://munch-mates.onrender.com/api/occasion-cards/getByCategory/${occasion}`
       );
       setOccasionFoods(response.data); // Assuming the response contains an array of foods
     } catch (err) {

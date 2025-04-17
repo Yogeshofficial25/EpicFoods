@@ -372,7 +372,7 @@ const Login = ({ setIsLoginOpen, onLoginSuccess }) => {
     try {
       setLoading(true);
       setError("");
-      const response = await axios.post("http://localhost:5000/api/auth/send-otp", { mobile, name, email });
+      const response = await axios.post("https://munch-mates.onrender.com/api/auth/send-otp", { mobile, name, email });
       if (response.data.success) {
         setStep("otp");
       } else {
@@ -391,7 +391,7 @@ const Login = ({ setIsLoginOpen, onLoginSuccess }) => {
       setLoading(true);
       setError("");
       const response = await axios.post(
-        "http://localhost:5000/api/auth/verify-otp",
+        "https://munch-mates.onrender.com/api/auth/verify-otp",
         { mobile, otp },
         { withCredentials: true }
       );

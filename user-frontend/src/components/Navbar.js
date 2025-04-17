@@ -346,7 +346,7 @@ const Navbar = () => {
   // Logout function
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true });
+      await axios.post("https://munch-mates.onrender.com/api/auth/logout", {}, { withCredentials: true });
       setIsLoggedIn(false);
       setUserName("");
       setDropdownOpen(false);
