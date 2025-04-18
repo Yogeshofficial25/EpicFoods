@@ -76,21 +76,3 @@ export default About;
 
 
 
-
-// const About = () => {
-//     return (
-//       <div className="container mx-auto p-6">
-//         <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">About Us</h1>
-//         <p className="text-gray-600 text-lg leading-relaxed text-center">
-//           CaterNinja is your one-stop solution for seamless catering services. We provide fresh, 
-//           high-quality food for all occasions, ensuring an unforgettable dining experience.
-//         </p>
-//         <div className="flex justify-center mt-6">
-//           <img src=" https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg" alt="About us" className="rounded-lg shadow-md"/>
-//         </div>
-//       </div>
-//     );
-//   };
-  
-//   export default About;
-  
