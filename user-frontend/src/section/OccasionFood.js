@@ -22,12 +22,12 @@ const OccasionFood = () => {
   const [error, setError] = useState(null);
 
   // Fetch occasion foods from the backend API
-  const fetchOccasionFoods = async (occasion) => {
+  const fetchOccasionFoods = async (category) => {
     setLoading(true);
     setError(null);
     try {
       const response = await axios.get(
-        `https://munch-mates.onrender.com/api/occasion-cards/getByCategory/${occasion}`
+        `https://munch-mates.onrender.com/api/occasion-cards/getByCategory/${category}`
       );
       setOccasionFoods(response.data); // Assuming the response contains an array of foods
     } catch (err) {
@@ -90,36 +90,34 @@ const OccasionFood = () => {
 
         {/* Display fetched food items */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6">
-          {occasionFoods
-            .filter((card) => card.category === selectedOccasion) // Filter cards by category
-            .map((card, index) => (
-              <div
-                key={index}
-                className="transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
-              >
-                <div className="bg-white rounded-xl shadow-md overflow-hidden">
-                  {/* Image with fallback */}
-                  <img
-                    src={
-                      card.image_url
-                        ? `${IMAGE_BASE_URL}${card.image_url}`  // Prepend base URL if image_url is relative
-                        : "https://via.placeholder.com/100"    // Fallback image
-                    }
-                    alt={card.title || "Food Item"}  // Use card.title as alt text if available
-                    className="w-full h-40 object-cover rounded-t-xl"
-                  />
-                  <div className="p-4">
-                    {/* Title of the card */}
-                    <h4 className="text-lg font-semibold text-gray-900">
-                      {card.title || "No Title Available"}
-                    </h4>
-                    <p className="text-sm text-gray-600 mt-1">
-                      {card.description || "No description available."}
-                    </p>
-                  </div>
+          {occasionFoods.map((card, index) => (
+            <div
+              key={index}
+              className="transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
+            >
+              <div className="bg-white rounded-xl shadow-md overflow-hidden">
+                {/* Image with fallback */}
+                <img
+                  src={
+                    card.image_url
+                      ? `${IMAGE_BASE_URL}${card.image_url}`  // Prepend base URL if image_url is relative
+                      : "https://via.placeholder.com/100"    // Fallback image
+                  }
+                  alt={card.title || "Food Item"}  // Use card.title as alt text if available
+                  className="w-full h-40 object-cover rounded-t-xl"
+                />
+                <div className="p-4">
+                  {/* Title of the card */}
+                  <h4 className="text-lg font-semibold text-gray-900">
+                    {card.title || "No Title Available"}
+                  </h4>
+                  <p className="text-sm text-gray-600 mt-1">
+                    {card.description || "No description available."}
+                  </p>
                 </div>
               </div>
-            ))}
+            </div>
+          ))}
         </div>
       </div>
     </div>

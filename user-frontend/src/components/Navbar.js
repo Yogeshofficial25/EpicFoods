@@ -1,7 +1,6 @@
 
-
-import { useState, useEffect } from "react"; // Added useEffect
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { FaUser, FaBars, FaTimes, FaSignOutAlt } from "react-icons/fa";
 import Login from "./Login";
 import axios from "axios";
@@ -12,8 +11,9 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
 
-  // Check login status on component mount
   useEffect(() => {
     const storedLoggedIn = localStorage.getItem("isLoggedIn") === "true";
     const storedUserName = localStorage.getItem("userName");
@@ -23,32 +23,31 @@ const Navbar = () => {
     }
   }, []);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
-  // Callback to handle successful login
   const handleLoginSuccess = (name) => {
     setIsLoggedIn(true);
     setUserName(name);
     setIsLoginOpen(false);
-    // Persist login state in localStorage
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("userName", name);
   };
 
-  // Logout function
   const handleLogout = async () => {
     try {
       await axios.post("https://munch-mates.onrender.com/api/auth/logout", {}, { withCredentials: true });
       setIsLoggedIn(false);
       setUserName("");
       setDropdownOpen(false);
-      // Clear persisted data
       localStorage.removeItem("isLoggedIn");
       localStorage.removeItem("userName");
       alert("Logged out successfully");
@@ -57,77 +56,64 @@ const Navbar = () => {
     }
   };
 
+  const isHome = location.pathname === "/";
+
   return (
     <>
-      <nav className="bg-gray-50/90 shadow-md p-4 fixed w-full top-0 z-50 border-b border-gray-200 backdrop-blur-md">
+      <nav
+        className={`fixed w-full top-0 z-50 transition-all duration-500 ${
+          isHome && !isScrolled
+            ? "bg-transparent text-white"
+            : "bg-gray-50/90 backdrop-blur-md text-gray-700 shadow-md"
+        } p-4 ${isHome && !isScrolled ? "" : "border-b border-gray-200"}`}
+      >
         <div className="container mx-auto flex justify-between items-center">
-          {/* Logo */}
-          <Link to="/" className="text-2xl font-extrabold text-amber-600 flex items-center">
-            <span className="mr-2 animate-pulse"></span> MunchMates
-          </Link>
+           {/* Logo */}
+         <Link to="/" className="text-3xl font-extrabold text-indigo-600 flex items-center">
+          <span className="mr-2 text-amber-500">Epic</span>
+          <span className="animate-pulse">Foods</span>
+        </Link>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Toggle */}
           <button
-            className="lg:hidden text-gray-700 hover:text-amber-600 text-2xl transition-transform duration-300 transform hover:scale-110"
+            className={`lg:hidden text-2xl transition-transform duration-300 transform hover:scale-110 ${
+              isHome && !isScrolled ? "text-white" : "text-gray-700 hover:text-amber-600"
+            }`}
             onClick={toggleMenu}
           >
             {menuOpen ? <FaTimes /> : <FaBars />}
           </button>
 
-          {/* Navigation Links */}
+          {/* Nav Links */}
           <ul
-            className={`lg:flex lg:space-x-8 lg:items-center absolute lg:static top-16 left-0 w-full lg:w-auto bg-gray-50/95 lg:bg-transparent p-4 lg:p-0 transition-all duration-300 ease-in-out ${
+            className={`lg:flex lg:space-x-8 lg:items-center absolute lg:static top-16 left-0 w-full lg:w-auto ${
+              isHome && !isScrolled ? "bg-black/60" : "bg-gray-50/95"
+            } lg:bg-transparent p-4 lg:p-0 transition-all duration-300 ${
               menuOpen ? "block shadow-lg" : "hidden lg:flex"
             }`}
           >
-            <li>
-              <Link
-                to="/"
-                className="block py-2 text-gray-700 font-medium hover:text-amber-600 transition duration-300 relative group"
-                onClick={() => setMenuOpen(false)}
-              >
-                Home
-                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-amber-600 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/menu"
-                className="block py-2 text-gray-700 font-medium hover:text-amber-600 transition duration-300 relative group"
-                onClick={() => setMenuOpen(false)}
-              >
-                Menu
-                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-amber-600 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/about"
-                className="block py-2 text-gray-700 font-medium hover:text-amber-600 transition duration-300 relative group"
-                onClick={() => setMenuOpen(false)}
-              >
-                About
-                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-amber-600 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/contact"
-                className="block py-2 text-gray-700 font-medium hover:text-amber-600 transition duration-300 relative group"
-                onClick={() => setMenuOpen(false)}
-              >
-                Contact
-                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-amber-600 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-            </li>
+            {["Home", "Menu", "Services", "About", "Contact"].map((item, idx) => (
+              <li key={idx}>
+                <Link
+                  to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                  className={`block py-2 ${
+                    isHome && !isScrolled ? "text-white" : "text-gray-700"
+                  } font-medium hover:text-amber-500 transition duration-300 relative group`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {item}
+                  <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-amber-600 transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+              </li>
+            ))}
 
-            {/* Conditional Login/Profile for Mobile */}
+            {/* Mobile Profile/Login */}
             <li className="lg:hidden">
               {isLoggedIn ? (
                 <div className="relative">
                   <button
                     onClick={toggleDropdown}
-                    className="block w-full text-left py-2 text-gray-700 font-medium hover:text-amber-600 transition duration-300 flex items-center"
+                    className="block w-full text-left py-2 font-medium flex items-center"
                   >
                     <FaUser className="mr-2" /> {userName || "Profile"}
                   </button>
@@ -148,7 +134,7 @@ const Navbar = () => {
                     setIsLoginOpen(true);
                     setMenuOpen(false);
                   }}
-                  className="block w-full text-left py-2 text-gray-700 font-medium hover:text-amber-600 transition duration-300"
+                  className="block w-full text-left py-2 font-medium"
                 >
                   Login
                 </button>
@@ -156,7 +142,7 @@ const Navbar = () => {
             </li>
           </ul>
 
-          {/* Conditional Login/Profile for Desktop */}
+          {/* Desktop Login/Profile */}
           {isLoggedIn ? (
             <div className="hidden lg:block relative">
               <button
@@ -187,7 +173,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Login Popup */}
+      {/* Login Modal */}
       {isLoginOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <Login setIsLoginOpen={setIsLoginOpen} onLoginSuccess={handleLoginSuccess} />
