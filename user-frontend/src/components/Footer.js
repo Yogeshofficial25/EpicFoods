@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="container mx-auto px-6 md:flex md:justify-between">
         {/* Logo & Description */}
         <div className="mb-6 md:mb-0">
-          <h2 className="text-2xl font-bold text-gray-200">MunchMates</h2>
+          <h2 className="text-2xl font-bold text-gray-200">epicFoods</h2>
           <p className="text-gray-400 mt-2 text-sm">
             Delicious meals, crafted with care for every occasion.
           </p>

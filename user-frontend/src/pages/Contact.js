@@ -37,7 +37,7 @@ const Contact = () => {
             {
               icon: <FaMapMarkerAlt />,
               title: "Address",
-              info: "Space Oyumpia wing c 604 Sudhgirni chouk,Chh.Sambhajinagar,India",
+              info: "Space Oyumpia wing c 604 Sudhgirni chouk, Chh.Sambhajinagar, India",
               hover: "hover:text-purple-600",
             },
           ].map((item, index) => (
@@ -54,7 +54,7 @@ const Contact = () => {
           ))}
         </div>
 
-        {/* Contact Form (Reduced height) */}
+        {/* Contact Form */}
         <form className="bg-white shadow-md rounded-2xl p-5 sm:p-6 space-y-4 hover:shadow-pink-300 transition-all w-full md:w-[90%] lg:w-[80%] mx-auto">
           <h3 className="text-lg font-semibold text-pink-700 text-center mb-2">
             Let’s Plan Something Special 🎉
@@ -83,7 +83,6 @@ const Contact = () => {
             className="w-full py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm resize-none"
             required
           />
-
           <button
             type="submit"
             className="bg-fuchsia-600 text-white px-4 py-2 rounded-full font-medium w-full hover:bg-fuchsia-700 transition text-sm"
@@ -91,6 +90,20 @@ const Contact = () => {
             Send Message
           </button>
         </form>
+      </div>
+
+      {/* Google Map Embed */}
+      <div className="mt-16 max-w-6xl mx-auto rounded-lg overflow-hidden shadow-lg border">
+        <iframe
+          title="Our Location"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3752.5540339044596!2d75.34269667564526!3d19.858814126930827!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdba27e4ed4701d%3A0x6a3f089978edef2!2sOlumpus%2C%20Sut%20Girni%20Rd%2C%20Gadia%20Vihar%2C%20Chhatrapati%20Sambhaji%20Nagar%2C%20Maharashtra%20431005!5e0!3m2!1sen!2sin!4v1745644742033!5m2!1sen!2sin"
+          width="100%"
+          height="450"
+          style={{ border: 0 }}
+          allowFullScreen=""
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        ></iframe>
       </div>
 
       {/* CTA Footer */}
