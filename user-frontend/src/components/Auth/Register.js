@@ -1,9 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom"; // Use Link for routing
+import { Link } from "react-router-dom";
 
-const Register = () => {
+const Register = ({ onClose }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -12,15 +12,20 @@ const Register = () => {
   });
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleRegister = async () => {
     setLoading(true);
     try {
-      const res = await axios.post("https://munch-mates.onrender.com/api/user/auth/register", formData);
+      const res = await axios.post(
+        "https://munch-mates.onrender.com/api/user/auth/register",
+        formData
+      );
 
       if (res.status === 201) {
-        toast.success("Registration successful!");
+        toast.success("Registration successful! Please login now.");
+        if (onClose) onClose(); // Close the modal
       }
     } catch (err) {
       const msg = err.response?.data?.error;
@@ -82,7 +87,9 @@ const Register = () => {
 
         <button
           onClick={handleRegister}
-          className={`bg-gradient-to-br from-fuchsia-500 to-purple-600 text-white px-4 py-2 rounded w-full ${loading ? "opacity-70 cursor-not-allowed" : ""}`}
+          className={`bg-gradient-to-br from-fuchsia-500 to-purple-600 text-white px-4 py-2 rounded w-full ${
+            loading ? "opacity-70 cursor-not-allowed" : ""
+          }`}
           disabled={loading}
         >
           {loading ? "Registering..." : "Register"}
