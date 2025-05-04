@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { X } from "lucide-react"; // Optional: nice close icon
 
 const Register = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -25,7 +26,7 @@ const Register = ({ onClose }) => {
 
       if (res.status === 201) {
         toast.success("Registration successful! Please login now.");
-        if (onClose) onClose(); // Close the modal
+        if (onClose) onClose(); // Close modal after success
       }
     } catch (err) {
       const msg = err.response?.data?.error;
@@ -48,6 +49,15 @@ const Register = ({ onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+
+        {/* Close button top-right */}
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-2 text-gray-500 hover:text-red-500"
+        >
+          <X size={20} />
+        </button>
+
         <h2 className="text-xl font-semibold mb-4 text-center text-fuchsia-700">
           Register
         </h2>
