@@ -12,8 +12,6 @@ const Button = ({ type = "button", onClick, children, variant = "", className = 
         pill: selected ? "bg-black text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200", 
         softBlue: selected  ?  "bg-white text-blue-700 border border-blue-300 shadow-md" 
             : "bg-transparent text-white border border-blue-300"
-
-
     };
 
     
